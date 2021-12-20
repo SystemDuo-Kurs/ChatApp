@@ -5,6 +5,7 @@ namespace ChatApp.Server.Services
     public interface IUserService
     {
         string CreateUser(User user);
+        bool AuthUser(User user);
     }
     public class UserService : IUserService
     {
@@ -16,6 +17,10 @@ namespace ChatApp.Server.Services
             _logger = logger;
         }
 
+        public bool AuthUser(User user) =>
+            _db.Users.Where(u => u.Email.ToLower() == user.Email.ToLower()
+                && u.Password.ToLower() == user.Password.ToLower()).Any();
+           
         public string CreateUser(User user)
         {
             _logger.LogInformation("Creating User");
@@ -31,7 +36,6 @@ namespace ChatApp.Server.Services
             _db.SaveChanges();
 
             return String.Empty;
-
         }
     }
 }

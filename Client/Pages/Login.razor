@@ -1,0 +1,10 @@
+﻿@page "/login"
+@inject AuthService _authService
+
+<EditForm Model=_registration.UserModel OnSubmit=_registration.RegisterUser>
+    <InputText placeholder="Name" @bind-Value=_registration.UserModel.Name/> <br/>
+    <InputText @bind-Value=_registration.UserModel.Email/> <br/>
+    <InputText @bind-Value=_registration.UserModel.Password/> <br/>
+    <button type="submit">Register</button>
+</EditForm>
+
