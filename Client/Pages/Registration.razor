@@ -1,0 +1,19 @@
+﻿@page "/registration"
+@inject ViewModels.IRegistration _registration
+
+<EditForm Model=_registration.UserModel OnSubmit=_registration.RegisterUser>
+    <InputText placeholder="Name" @bind-Value=_registration.UserModel.Name/> <br/>
+    <InputText @bind-Value=_registration.UserModel.Email/> <br/>
+    <InputText @bind-Value=_registration.UserModel.Password/> <br/>
+    <button type="submit">Register</button>
+</EditForm>
+
+<style>
+    body {
+        background: blue;
+    }
+</style>
+
+@code {
+
+}

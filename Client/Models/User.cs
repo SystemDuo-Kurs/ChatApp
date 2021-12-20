@@ -4,21 +4,28 @@ namespace ChatApp.Client.Models
 {
     public interface IUserModel
     {
-        void SendUser();
-        ChatApp.Shared.User UserDTO { get; set; }
+        ChatApp.Shared.User UserDTO { get; set;  }
+        string Name { get; set; }
+        string Email { get; set; }
+        string Password { get; set; }
     }
     public class User : IUserModel
     {
-        private SignalRService _signalRService;
         public ChatApp.Shared.User UserDTO { get; set; }
-        public User(SignalRService signalRService)
-        {
-            _signalRService = signalRService;
+        public string Name {
+            get => UserDTO is not null ? UserDTO.Name : String.Empty;
+            set => UserDTO.Name = value; 
         }
 
-        public async void SendUser()
+        public string Email { 
+            get => UserDTO is not null ? UserDTO.Email : String.Empty;
+            set => UserDTO.Email = value;
+        }
+
+        public string Password
         {
-            await _signalRService.UserConnection.SendAsync("RegisterUser", UserDTO);
+            get => UserDTO is not null ? UserDTO.Password : String.Empty;
+            set => UserDTO.Password = value;
         }
     }
 }
