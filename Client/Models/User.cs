@@ -13,8 +13,8 @@ namespace ChatApp.Client.Models
     {
         public ChatApp.Shared.User UserDTO { get; set; }
         public string Name {
-            get => UserDTO is not null ? UserDTO.Name : String.Empty;
-            set => UserDTO.Name = value; 
+            get => UserDTO is not null ? UserDTO.UserName : String.Empty;
+            set => UserDTO.UserName = value; 
         }
 
         public string Email { 

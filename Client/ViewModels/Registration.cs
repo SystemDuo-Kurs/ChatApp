@@ -21,7 +21,7 @@ namespace ChatApp.Client.ViewModels
 
         public async void RegisterUser()
         {
-            await _signalRService.UserConnection.SendAsync("RegisterUser", _userModel.UserDTO);
+            await _signalRService.UserConnection.SendAsync("Register", _userModel.UserDTO);
         }
     }
 }
