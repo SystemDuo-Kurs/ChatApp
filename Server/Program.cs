@@ -19,10 +19,12 @@ builder.Services.AddSignalR();
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("Database"))
     );
+
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddIdentity<User, IdentityRole>()
-     .AddEntityFrameworkStores<Db>()
-     .AddDefaultTokenProviders();
+builder.Services.AddTransient<IMessageService, MessageService>();
+//builder.Services.AddIdentity<User, IdentityRole>()
+//     .AddEntityFrameworkStores<Db>()
+//     .AddDefaultTokenProviders();
 
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");

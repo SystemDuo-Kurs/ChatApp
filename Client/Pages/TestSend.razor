@@ -1,0 +1,11 @@
+﻿@page "/testsend"
+@inject ChatApp.Client.ViewModels.IMessageSend MessageSend
+
+<EditForm Model=MessageSend.Message OnSubmit=MessageSend.SendMessage>
+    <InputText placeholder="Name" @bind-Value=MessageSend.Message.Content/> <br/>
+    
+    <button type="submit">TestSend Message</button>
+</EditForm>
+
+
+

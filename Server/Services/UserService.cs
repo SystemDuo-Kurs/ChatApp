@@ -13,16 +13,16 @@ namespace ChatApp.Server.Services
         private readonly Db _db;
         private readonly ILogger _logger;
         private readonly UserManager<User> _userManager;
-        public UserService(Db db, ILogger<UserService> logger, UserManager<User> userManager)
+        public UserService(Db db, ILogger<UserService> logger)//, UserManager<User> userManager)
         {
             _db = db;
             _logger = logger;
-            _userManager = userManager;
+            // _userManager = userManager;
         }
 
-        public bool AuthUser(User user) =>
-            _db.Users.Where(u => u.Email.ToLower() == user.Email.ToLower()
-                && u.Password.ToLower() == user.Password.ToLower()).Any();
+        public bool AuthUser(User user) => true;
+            //_db.Users.Where(u => u.Email.ToLower() == user.Email.ToLower()
+               // && u.Password.ToLower() == user.Password.ToLower()).Any();
   
         public async Task<string> CreateUser(User user)
         {

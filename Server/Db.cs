@@ -1,10 +1,11 @@
 ﻿using ChatApp.Shared;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatApp.Server
 {
-    public class Db : IdentityDbContext<User>
+    public class Db : IdentityDbContext<IdentityUser>
     {
         public Db(DbContextOptions<Db> options ) : base( options ) { }
 
@@ -15,6 +16,7 @@ namespace ChatApp.Server
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Message>().HasKey(m => m.Id);
+            modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<User>().HasMany(u => u.Messages).WithOne(m => m.User);
             modelBuilder.Entity<User>().Ignore(u => u.Password);
             

@@ -9,7 +9,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<SignalRService>();
 builder.Services.AddTransient<ChatApp.Client.Models.IUserModel, ChatApp.Client.Models.User>();
+builder.Services.AddTransient<ChatApp.Client.Models.IMessageModel, ChatApp.Client.Models.Message>();
+
 builder.Services.AddTransient<ChatApp.Client.ViewModels.IRegistration, ChatApp.Client.ViewModels.Registration>();
+builder.Services.AddTransient<ChatApp.Client.ViewModels.IMessageSend, ChatApp.Client.ViewModels.MessageSend>();
+
 
 var app = builder.Build();
 app.Services.GetService<SignalRService>();
