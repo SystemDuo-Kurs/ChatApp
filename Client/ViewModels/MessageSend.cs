@@ -19,7 +19,7 @@ namespace ChatApp.Client.ViewModels
             Message.User = new();
             Message.User.UserDTO = new ChatApp.Shared.User
             {
-                TempName = "sklj"
+                UserName = "sklj"
             };
         }
 

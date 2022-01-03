@@ -14,16 +14,16 @@ namespace ChatApp.Server.Hubs
             _logger = logger;
         }
 
-        public void Register(User user)
+        public async Task Register(User user)
         {
             _logger.LogInformation("User recieved");
-            _userService.CreateUser(user);
+            await _userService.CreateUser(user);
         }
 
-        public async void Login(User user)
+        public async Task Login(User user)
         {
             _logger.LogInformation("User logging in");
-            await Clients.Caller.SendAsync("loginfo", _userService.AuthUser(user));
+            await Clients.Caller.SendAsync("loginfo", await _userService.AuthUser(user));
         }
     }
 }
