@@ -22,29 +22,9 @@ builder.Services.AddDbContext<Db>(options => options.UseSqlServer(
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IMessageService, MessageService>();
-//builder.Services.AddIdentity<User, IdentityRole>()
-//     .AddEntityFrameworkStores<Db>()
-//     .AddDefaultTokenProviders();
-
-
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-builder.Services.AddAuthentication(opt =>
-{
-	opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-	opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-	options.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuer = true,
-		ValidateAudience = true,
-		ValidateLifetime = true,
-		ValidateIssuerSigningKey = true,
-		ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-		ValidAudience = jwtSettings.GetSection("validAudience").Value,
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
-	};
-});
+builder.Services.AddIdentity<User, IdentityRole>()
+     .AddEntityFrameworkStores<Db>()
+     .AddDefaultTokenProviders();
 
 
 var app = builder.Build();

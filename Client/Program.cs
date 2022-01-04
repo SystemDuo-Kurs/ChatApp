@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using ChatApp.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -14,6 +15,9 @@ builder.Services.AddTransient<ChatApp.Client.Models.IMessageModel, ChatApp.Clien
 builder.Services.AddTransient<ChatApp.Client.ViewModels.IRegistration, ChatApp.Client.ViewModels.Registration>();
 builder.Services.AddTransient<ChatApp.Client.ViewModels.IMessageSend, ChatApp.Client.ViewModels.MessageSend>();
 
+builder.Services.AddTransient<AuthService>();
+
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 app.Services.GetService<SignalRService>();

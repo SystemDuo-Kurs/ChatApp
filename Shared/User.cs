@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Shared
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string TempName { get; set; }
         public string Password { get; set; }    
         public List<Message> Messages { get; set; }
     }

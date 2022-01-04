@@ -1,3 +1,8 @@
 ﻿@page "/login"
-@inject AuthService _authService
+@inject AuthService AuthService
 
+<EditForm class="testbgd" Model=AuthService.UserModel OnSubmit=AuthService.Login>
+    <InputText placeholder="Name" @bind-Value=AuthService.UserModel.Name/> <br/>
+    <InputText @bind-Value=AuthService.UserModel.Password/> <br/>
+    <button type="submit">Login</button>
+</EditForm>

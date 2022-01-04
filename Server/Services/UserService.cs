@@ -6,23 +6,34 @@ namespace ChatApp.Server.Services
     public interface IUserService
     {
         Task<string> CreateUser(User user);
-        bool AuthUser(User user);
+        Task<bool> AuthUser(User user);
     }
     public class UserService : IUserService
     {
         private readonly Db _db;
         private readonly ILogger _logger;
         private readonly UserManager<User> _userManager;
-        public UserService(Db db, ILogger<UserService> logger)//, UserManager<User> userManager)
+        public UserService(Db db, ILogger<UserService> logger, UserManager<User> userManager)
         {
             _db = db;
             _logger = logger;
-            // _userManager = userManager;
+            _userManager = userManager;
         }
 
-        public bool AuthUser(User user) => true;
-            //_db.Users.Where(u => u.Email.ToLower() == user.Email.ToLower()
-               // && u.Password.ToLower() == user.Password.ToLower()).Any();
+        public async Task<bool> AuthUser(User user)
+        {
+            _logger.LogInformation("User logging in...");
+            var serverSideUser = await _userManager.FindByNameAsync(user.UserName);
+            if (await _userManager.CheckPasswordAsync(serverSideUser, user.Password))
+            {
+                _logger.LogInformation("Login OK");
+                return true;
+            }else
+            {
+                _logger.LogWarning("Login failed");
+                return false;
+            }
+        }
   
         public async Task<string> CreateUser(User user)
         {
