@@ -27,12 +27,13 @@
         }
 
         public static explicit operator ChatApp.Shared.Message(Message m)
-        => new ChatApp.Shared.Message
+            => new ChatApp.Shared.Message
             {
                 Content = m.Content,
                 Sent = m.Sent,
-                User = m.User.UserDTO
+                User = m.User?.UserDTO
             };
+        
     
 
     }

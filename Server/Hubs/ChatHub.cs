@@ -13,10 +13,17 @@ namespace ChatApp.Server.Hubs
             _messageService = messageService;
             _logger = logger;
         }
-        public void StoreMessage(Message message)
+        public async Task StoreMessage(Message message)
         {
             _logger.LogInformation("Recieved message");
-            _messageService.StoreMessage(message);
+            await _messageService.StoreMessage(message);
+        }
+
+        public async Task SendMessagesToUser()
+        {
+            _logger.LogInformation("Sending messages");
+            await Clients.Caller.SendAsync("RecieveMessages",
+                _messageService.GetAllMessages());
         }
     }
 }

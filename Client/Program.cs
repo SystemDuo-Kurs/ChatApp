@@ -14,6 +14,8 @@ builder.Services.AddTransient<ChatApp.Client.Models.IMessageModel, ChatApp.Clien
 
 builder.Services.AddTransient<ChatApp.Client.ViewModels.IRegistration, ChatApp.Client.ViewModels.Registration>();
 builder.Services.AddTransient<ChatApp.Client.ViewModels.IMessageSend, ChatApp.Client.ViewModels.MessageSend>();
+builder.Services.AddTransient<ChatApp.Client.ViewModels.IMessageList, ChatApp.Client.ViewModels.MessageList>();
+
 
 builder.Services.AddTransient<AuthService>();
 

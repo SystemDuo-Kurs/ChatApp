@@ -7,6 +7,7 @@ namespace ChatApp.Server.Services
     {
         Task<string> CreateUser(User user);
         Task<bool> AuthUser(User user);
+        Task<User> GetUserByName(string name);
     }
     public class UserService : IUserService
     {
@@ -19,6 +20,9 @@ namespace ChatApp.Server.Services
             _logger = logger;
             _userManager = userManager;
         }
+
+        public async Task<User> GetUserByName(string name)
+            => await _userManager.FindByNameAsync(name);
 
         public async Task<bool> AuthUser(User user)
         {

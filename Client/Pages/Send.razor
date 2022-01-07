@@ -1,0 +1,27 @@
+﻿@page "/send"
+@inject ChatApp.Client.ViewModels.IMessageSend MessageSend
+@inject ChatApp.Client.ViewModels.IMessageList MessageList
+
+<ul>
+    @foreach(var msg in MessageList.Messages)
+    {
+        <li><b>@msg.User.Name</b> : @msg.Content</li>
+    }
+</ul>
+
+<EditForm Model=MessageSend.Message OnSubmit=MessageSend.SendMessage>
+    <InputText placeholder="Name" @bind-Value=MessageSend.Message.Content/> <br/>
+    <button type="submit">Send</button>
+</EditForm>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await MessageList.GetMessages();
+        StateHasChanged();
+    }
+}
+
+
+
