@@ -17,12 +17,13 @@ namespace ChatApp.Server.Hubs
         {
             _logger.LogInformation("Recieved message");
             await _messageService.StoreMessage(message);
+            await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
         public async Task SendMessagesToUser()
         {
             _logger.LogInformation("Sending messages");
-            await Clients.Caller.SendAsync("RecieveMessages",
+            await Clients.Caller.SendAsync("ReceiveMessages",
                 _messageService.GetAllMessages());
         }
     }

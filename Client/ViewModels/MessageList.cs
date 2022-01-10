@@ -18,18 +18,19 @@ namespace ChatApp.Client.ViewModels
         {
             _signalRService = signalRService;
             _signalRService.ChatConnection.On<List<ChatApp.Shared.Message>>
-                ("RecieveMessages", lm => 
+                ("ReceiveMessages", lm =>
                     {
                         Messages.Clear();
-                        lm.ForEach(mDTO => Messages.Add((Message)mDTO)); 
+                        lm.ForEach(mDTO => Messages.Add((Message)mDTO));
                     }
                 );
+            _signalRService.ChatConnection.On<ChatApp.Shared.Message>
+                ("ReceiveMessage", m => Messages.Add((Message)m));
         }
-
-
 
         public async Task GetMessages()
         {
+           
             await _signalRService.ChatConnection.SendAsync("SendMessagesToUser");
         }
     }

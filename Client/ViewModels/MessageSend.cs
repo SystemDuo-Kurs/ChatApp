@@ -31,6 +31,7 @@ namespace ChatApp.Client.ViewModels
             msg.User.UserName = user;
             await _signalRService.ChatConnection
                 .SendAsync("StoreMessage", msg);
+            Message.Content = String.Empty;
         }
     }
 }

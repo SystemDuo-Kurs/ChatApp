@@ -1,6 +1,9 @@
 ﻿@page "/send"
+@using System.Collections.Specialized
 @inject ChatApp.Client.ViewModels.IMessageSend MessageSend
 @inject ChatApp.Client.ViewModels.IMessageList MessageList
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager NM
 
 <ul>
     @foreach(var msg in MessageList.Messages)
@@ -10,7 +13,7 @@
 </ul>
 
 <EditForm Model=MessageSend.Message OnSubmit=MessageSend.SendMessage>
-    <InputText placeholder="Name" @bind-Value=MessageSend.Message.Content/> <br/>
+    <InputText @bind-Value=MessageSend.Message.Content/> <br/>
     <button type="submit">Send</button>
 </EditForm>
 
@@ -18,8 +21,12 @@
 {
     protected override async Task OnInitializedAsync()
     {
+        if (!(await LocalStorage.ContainKeyAsync("loggedin")))
+            NM.NavigateTo("/", true);
+
         await MessageList.GetMessages();
-        StateHasChanged();
+        MessageList.Messages.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) 
+            => StateHasChanged();
     }
 }
 
