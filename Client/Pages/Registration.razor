@@ -1,18 +1,43 @@
 ﻿@page "/registration"
 @inject ViewModels.IRegistration _registration
-
+@using System.ComponentModel
+@inject NavigationManager NM
 <section class="container">
-    <EditForm Model=_registration.UserModel OnSubmit=_registration.RegisterUser>
-        <InputText placeholder="Name" @bind-Value=_registration.UserModel.Name/> <br/>
-        <InputText @bind-Value=_registration.UserModel.Email/> <br/>
-        <InputText @bind-Value=_registration.UserModel.Password/> <br/>
-    <button type="submit">Register</button>
+    <EditForm Model=_registration.UserModel OnSubmit=Register>
+        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Name/><br/> 
+        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Email/><br/> 
+        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Password/><br/> 
+        <button type="submit">Register</button>
     </EditForm>
+
+<ul>
+    @if (_registration.Status is not null)
+    {
+        @foreach (string err in _registration.Status.Errors)
+        {
+            <li>@err</li>
+        }
+    }
+</ul>
+
 </section>
-<p>
-    <MatStringField Label="Standard"></MatStringField>
-</p>
 
-@code {
+@code 
+{
+    protected override void OnInitialized() => 
+        _registration.PropertyChanged += StatusChange;
 
+
+    private void StatusChange(object? sender, PropertyChangedEventArgs a)
+    {
+        _registration.UserModel.Password = string.Empty;
+        if (_registration.Status.Success)
+            NM.NavigateTo("/login");
+        else
+            StateHasChanged();
+    }
+    private async Task Register()
+    {
+        await _registration.RegisterUser();
+    }
 }

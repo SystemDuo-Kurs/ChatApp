@@ -8,6 +8,7 @@ namespace ChatApp.Server.Hubs
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserHub> _logger;
+
         public UserHub(IUserService userService, ILogger<UserHub> logger)
         {
             _userService = userService;
@@ -17,7 +18,7 @@ namespace ChatApp.Server.Hubs
         public async Task Register(User user)
         {
             _logger.LogInformation("User recieved");
-            await _userService.CreateUser(user);
+            await Clients.Caller.SendAsync("getStatus", await _userService.CreateUser(user));
         }
 
         public async Task Login(User user)
