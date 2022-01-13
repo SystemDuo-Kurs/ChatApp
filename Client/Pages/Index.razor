@@ -1,7 +1,22 @@
 ﻿@page "/"
 
-@*komentar*@
-<MatButton>Test</MatButton>
+<section class="home-container">
+    <MudText Typo="Typo.h1">Chat App</MudText>
+    <div class="options-container">
+        <div class="option" id="option1">
+            <MudText Typo="Typo.h3">Create an account</MudText>
+            <NavLink class="registration-nav-link" href="registration">
+                <MudButton Class="user-btn" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+            </NavLink>
+        </div>
+        <div class="option" id="option2">
+            <MudText Typo="Typo.h3">Have an account?</MudText>
+            <NavLink class="registration-nav-link" href="login">
+                <MudButton Class="user-btn" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+            </NavLink>
+        </div>
+    </div>
+</section>
 
 @code {
 }

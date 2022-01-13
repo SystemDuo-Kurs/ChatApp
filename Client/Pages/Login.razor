@@ -1,8 +1,16 @@
 ﻿@page "/login"
 @inject AuthService AuthService
 
-<EditForm class="testbgd" Model=AuthService.UserModel OnSubmit=AuthService.Login>
-    <InputText placeholder="Name" @bind-Value=AuthService.UserModel.Name/> <br/>
-    <InputText @bind-Value=AuthService.UserModel.Password/> <br/>
-    <button type="submit">Login</button>
-</EditForm>
+<section class="container">
+    <MudText Typo="Typo.h4">Login</MudText>
+    <EditForm Model=AuthService.UserModel OnSubmit=AuthService.Login>
+        <MudTextField class="user-input" @bind-Value=AuthService.UserModel.Name Label="Name" Variant="Variant.Filled" />
+        <MudTextField class="user-input" @bind-Value=AuthService.UserModel.Password Label="Password" Variant="Variant.Filled" />
+        <div class="submit">
+            <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+            <NavLink class="registration-nav-link" href="registration">
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary">Register</MudButton>
+            </NavLink>
+        </div> 
+    </EditForm>
+</section>

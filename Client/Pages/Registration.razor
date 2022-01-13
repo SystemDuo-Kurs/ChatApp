@@ -9,7 +9,12 @@
         <MudTextField class="user-input" @bind-Value=_registration.UserModel.Name Label="Name" Variant="Variant.Filled" />
         <MudTextField class="user-input" @bind-Value=_registration.UserModel.Email Label="Email" Variant="Variant.Filled" />
         <MudTextField class="user-input" @bind-Value=_registration.UserModel.Password Label="Password" Variant="Variant.Filled" />
-        <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+        <div class="submit">
+            <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+            <NavLink class="registration-nav-link" href="login">
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary">Login Instead</MudButton>
+            </NavLink>        
+        </div>
     </EditForm>
 
 <ul>
