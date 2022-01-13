@@ -2,12 +2,14 @@
 @inject ViewModels.IRegistration _registration
 @using System.ComponentModel
 @inject NavigationManager NM
+
 <section class="container">
+    <MudText Typo="Typo.h4">Register</MudText>
     <EditForm Model=_registration.UserModel OnSubmit=Register>
-        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Name/><br/> 
-        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Email/><br/> 
-        <MatStringField Label="Standard" @bind-Value=_registration.UserModel.Password/><br/> 
-        <button type="submit">Register</button>
+        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Name Label="Name" Variant="Variant.Filled" />
+        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Email Label="Email" Variant="Variant.Filled" />
+        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Password Label="Password" Variant="Variant.Filled" />
+        <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
     </EditForm>
 
 <ul>

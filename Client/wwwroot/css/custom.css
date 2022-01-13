@@ -1,0 +1,16 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+main {
+    overflow: hidden;
+}
+
+.container {
+    margin: 2.5rem;
+}
+
+.user-input {
+    width: 20%;
+    margin: 1rem 0;
+}

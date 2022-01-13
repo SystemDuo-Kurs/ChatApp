@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 using ChatApp.Client;
-using MatBlazor;
+using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -20,7 +20,7 @@ builder.Services.AddTransient<ChatApp.Client.ViewModels.IMessageList, ChatApp.Cl
 builder.Services.AddTransient<AuthService>();
 
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddMatBlazor();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 app.Services.GetService<SignalRService>();
