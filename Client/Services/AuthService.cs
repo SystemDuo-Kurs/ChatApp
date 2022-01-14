@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace ChatApp.Client
+namespace ChatApp.Client.Services
 {
     public class AuthService
     {
@@ -10,7 +10,7 @@ namespace ChatApp.Client
         private readonly Blazored.LocalStorage.ILocalStorageService _localStorage;
         private readonly NavigationManager _navMan;
         public Models.IUserModel UserModel { get => _userModel; }
-     
+
         public AuthService(SignalRService signalRService, Models.IUserModel userModel,
             Blazored.LocalStorage.ILocalStorageService localStorage,
             NavigationManager navigationManager)
@@ -23,12 +23,12 @@ namespace ChatApp.Client
                 {
                     if (b)
                         SaveData();
-                    
                 });
 
             _userModel = userModel;
             _userModel.UserDTO = new();
         }
+
         private async Task SaveData()
         {
             await _localStorage.SetItemAsStringAsync("loggedin", UserModel.Name);

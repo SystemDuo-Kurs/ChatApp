@@ -1,39 +1,65 @@
 ﻿@page "/registration"
 @inject ViewModels.IRegistration _registration
-@using System.ComponentModel
 @inject NavigationManager NM
+@using System.ComponentModel
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
 
 <section class="container">
     <MudText Typo="Typo.h4">Register</MudText>
-    <EditForm Model=_registration.UserModel OnSubmit=Register>
-        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Name Label="Name" Variant="Variant.Filled" />
-        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Email Label="Email" Variant="Variant.Filled" />
-        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Password Label="Password" Variant="Variant.Filled" />
+    <MudForm Model=_registration.UserModel @ref="_form" @bind-IsValid="@_success" @bind-Errors="@_errors">
+        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Name Label="Name" Variant="Variant.Filled"  Required="true" RequiredError="Name is required!" />
+        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Email Label="Email" Variant="Variant.Filled" Required="true" RequiredError="Email is required!" 
+        Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+        <MudTextField T="string" Label="Password" Variant="Variant.Filled" HelperText="Choose a strong password" @ref="_pwField"
+            InputType="InputType.Password"
+            Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+            RequiredError="Password is required!"/>
+        <MudTextField T="string"
+            Label="Password" Variant="Variant.Filled" HelperText="Repeat the password" InputType="InputType.Password"
+            Validation="@(new Func<string, string>(PasswordMatch))"/>
         <div class="submit">
-            <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Register</MudButton>
+            <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" OnClick="@_registration.RegisterUser">Register</MudButton>
             <NavLink class="registration-nav-link" href="login">
                 <MudButton Variant="Variant.Filled" Color="Color.Secondary">Login Instead</MudButton>
             </NavLink>        
         </div>
-    </EditForm>
-
-<ul>
-    @if (_registration.Status is not null)
-    {
-        @foreach (string err in _registration.Status.Errors)
-        {
-            <li>@err</li>
-        }
-    }
-</ul>
-
+    </MudForm>
 </section>
 
 @code 
 {
-    protected override void OnInitialized() => 
-        _registration.PropertyChanged += StatusChange;
+    private bool _success;
+    private string[] _errors = { };
+    private MudTextField<string> _pwField;
+    private MudForm _form;
 
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password is required!";
+            yield break;
+        }
+        if (pw.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(pw, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(pw, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(pw, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+    private string PasswordMatch(string arg)
+    {
+        if (_pwField.Value != arg)
+            return "Passwords don't match";
+        return null;
+    }
+
+    protected override void OnInitialized() => 
+    _registration.PropertyChanged += StatusChange;
 
     private void StatusChange(object? sender, PropertyChangedEventArgs a)
     {
@@ -41,7 +67,10 @@
         if (_registration.Status.Success)
             NM.NavigateTo("/login");
         else
-            StateHasChanged();
+        {
+            _errors = _errors.Concat(_registration.Status.Errors).ToArray();
+            _success = false;
+        }
     }
     private async Task Register()
     {

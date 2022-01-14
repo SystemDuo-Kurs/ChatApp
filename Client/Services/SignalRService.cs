@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace ChatApp.Client
+namespace ChatApp.Client.Services
 {
     public class SignalRService
     {

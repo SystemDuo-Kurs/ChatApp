@@ -1,6 +1,7 @@
 ﻿using ChatApp.Shared;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.ComponentModel;
+using ChatApp.Client.Services;
 
 namespace ChatApp.Client.ViewModels
 {
@@ -21,7 +22,7 @@ namespace ChatApp.Client.ViewModels
         private readonly Models.IUserModel _userModel;
 
         public Models.IUserModel UserModel
-        { get { return _userModel; } }
+        { get => _userModel; }
 
         private Status _status;
 
