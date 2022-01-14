@@ -8,20 +8,55 @@
 <section class="container">
     <MudText Typo="Typo.h4">Register</MudText>
     <MudForm Model=_registration.UserModel @ref="_form" @bind-IsValid="@_success" @bind-Errors="@_errors">
-        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Name Label="Name" Variant="Variant.Filled"  Required="true" RequiredError="Name is required!" />
-        <MudTextField class="user-input" @bind-Value=_registration.UserModel.Email Label="Email" Variant="Variant.Filled" Required="true" RequiredError="Email is required!" 
-        Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-        <MudTextField T="string" Label="Password" Variant="Variant.Filled" HelperText="Choose a strong password" @ref="_pwField"
+        <MudTextField class="user-input" 
+            @bind-Value=_registration.UserModel.Name 
+            Label="Name" 
+            Variant="Variant.Filled"  
+            Required="true" 
+            RequiredError="Name is required!" 
+        />
+        <MudTextField 
+            class="user-input" 
+            @bind-Value=_registration.UserModel.Email 
+            Label="Email" 
+            Variant="Variant.Filled" 
+            Required="true" 
+            RequiredError="Email is required!" 
+            Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" 
+        />
+        <MudTextField 
+            T="string" 
+            Label="Password" 
+            Variant="Variant.Filled" 
+            HelperText="Choose a strong password" 
+            @ref="_pwField"
             InputType="InputType.Password"
-            Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-            RequiredError="Password is required!"/>
-        <MudTextField T="string"
-            Label="Password" Variant="Variant.Filled" HelperText="Repeat the password" InputType="InputType.Password"
-            Validation="@(new Func<string, string>(PasswordMatch))"/>
+            Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
+            Required="true"
+            RequiredError="Password is required!"
+        />      
+        <MudTextField 
+            T="string"
+            Label="Password" 
+            Variant="Variant.Filled" 
+            HelperText="Repeat the password" 
+            InputType="InputType.Password"
+            Validation="@(new Func<string, string>(PasswordMatch))"
+        />       
         <div class="submit">
-            <MudButton Class="user-btn" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" OnClick="@_registration.RegisterUser">Register</MudButton>
-            <NavLink class="registration-nav-link" href="login">
-                <MudButton Variant="Variant.Filled" Color="Color.Secondary">Login Instead</MudButton>
+            <MudButton 
+                Class="user-btn" 
+                ButtonType="ButtonType.Submit" 
+                Variant="Variant.Filled" 
+                Color="Color.Primary" 
+                Disabled="@(!_success)" 
+                OnClick="@_registration.RegisterUser">Register</MudButton>
+            <NavLink 
+                class="registration-nav-link" 
+                href="login">
+                <MudButton 
+                    Variant="Variant.Filled" 
+                    Color="Color.Secondary">Login Instead</MudButton>
             </NavLink>        
         </div>
     </MudForm>
@@ -72,6 +107,7 @@
             _success = false;
         }
     }
+
     private async Task Register()
     {
         await _registration.RegisterUser();
