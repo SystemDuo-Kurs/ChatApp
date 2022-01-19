@@ -7,17 +7,21 @@
 
 <section class="container">
     <MudText Typo="Typo.h4">Register</MudText>
-    <MudForm Model=_registration.UserModel @ref="_form" @bind-IsValid="@_success" @bind-Errors="@_errors">
+    <MudForm  
+        Model=_registration.UserModel 
+        @ref="_form" 
+        @bind-IsValid="@_success" 
+        @bind-Errors="@_errors">
         <MudTextField class="user-input" 
-            @bind-Value=_registration.UserModel.Name 
+            @bind-Value=_registration.UserModel.Name
             Label="Name" 
             Variant="Variant.Filled"  
             Required="true" 
             RequiredError="Name is required!" 
         />
-        <MudTextField 
+        <MudTextField
             class="user-input" 
-            @bind-Value=_registration.UserModel.Email 
+            @bind-Value=_registration.UserModel.Email
             Label="Email" 
             Variant="Variant.Filled" 
             Required="true" 
@@ -29,7 +33,8 @@
             Label="Password" 
             Variant="Variant.Filled" 
             HelperText="Choose a strong password" 
-            @ref="_pwField"
+            @bind-Value=_registration.UserModel.Password
+            
             InputType="InputType.Password"
             Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
             Required="true"
@@ -41,12 +46,13 @@
             Variant="Variant.Filled" 
             HelperText="Repeat the password" 
             InputType="InputType.Password"
+           
             Validation="@(new Func<string, string>(PasswordMatch))"
         />       
         <div class="submit">
             <MudButton 
                 Class="user-btn" 
-                ButtonType="ButtonType.Submit" 
+                 
                 Variant="Variant.Filled" 
                 Color="Color.Primary" 
                 Disabled="@(!_success)" 
@@ -66,7 +72,6 @@
 {
     private bool _success;
     private string[] _errors = { };
-    private MudTextField<string> _pwField;
     private MudForm _form;
 
     private IEnumerable<string> PasswordStrength(string pw)
@@ -88,7 +93,7 @@
 
     private string PasswordMatch(string arg)
     {
-        if (_pwField.Value != arg)
+        if (_registration.UserModel.Password != arg)
             return "Passwords don't match";
         return null;
     }
@@ -110,6 +115,10 @@
 
     private async Task Register()
     {
-        await _registration.RegisterUser();
+        await _form.Validate();
+        if (_form.IsValid)
+        {
+            await _registration.RegisterUser();
+        }
     }
 }

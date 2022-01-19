@@ -25,6 +25,7 @@ builder.Services.AddTransient<IMessageService, MessageService>();
 builder.Services.AddIdentity<User, IdentityRole>()
      .AddEntityFrameworkStores<Db>()
      .AddDefaultTokenProviders();
+builder.Services.AddApplicationInsightsTelemetry();
 
 
 var app = builder.Build();
